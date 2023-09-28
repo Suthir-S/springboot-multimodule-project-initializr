@@ -1,0 +1,13 @@
+package com.multispring.{projectName}.request;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import lombok.Builder;
+@Data
+@Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class SystemParameterRequest {
+  private String variable;
+  private String value;
+  private String description;
+}

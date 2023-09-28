@@ -1,0 +1,14 @@
+package {groupId}.repository;
+
+import {groupId}.entity.SystemParameter;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface SystemParameterRepository
+    extends MongoRepository<SystemParameter, String> {
+  Optional<SystemParameter> findByVariable(String variable);
+  List<SystemParameter> findAllByValue(String value);
+}

@@ -1,0 +1,21 @@
+package com.multispring.{projectName}.enums;
+
+public enum ErrorCode {
+
+    VARIABLE_ALREADY_EXISTS("Variable Name already exists"),
+    VARIABLE_DOES_NOT_EXISTS("Variable doesn't exists");
+
+    private String message;
+
+    ErrorCode(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public String getCode() {
+        return this.name();
+    }
+}

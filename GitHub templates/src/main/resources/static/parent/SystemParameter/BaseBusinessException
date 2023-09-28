@@ -1,0 +1,41 @@
+package com.multispring.{projectName}.exception;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import com.multispring.{projectName}.enums.ErrorCode;
+
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class BaseBusinessException extends Exception {
+
+  private final ErrorCode errorCode;
+  private final String errorMessage;
+
+  public BaseBusinessException(ErrorCode errorCode) {
+    this.errorCode = errorCode;
+    this.errorMessage = null;
+  }
+
+  public BaseBusinessException(ErrorCode errorCode, String errorMessage) {
+    this.errorCode = errorCode;
+    this.errorMessage = errorMessage;
+  }
+
+
+  public String getCode() {
+    return this.errorCode.getCode();
+  }
+
+
+  @Override
+  public String getMessage() {
+
+    if (!(errorMessage.isBlank())) {
+      return this.errorMessage;
+    } else {
+      return this.errorCode.getMessage();
+    }
+  }
+}

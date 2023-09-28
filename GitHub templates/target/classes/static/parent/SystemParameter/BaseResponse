@@ -1,0 +1,107 @@
+package com.multispring.{projectName}.response;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class BaseResponse implements Serializable {
+
+  private static final long serialVersionUID = -255944134096957061L;
+
+  private String id;
+  private String userId;
+  private Date createdDate;
+  private String createdBy;
+  private Date updatedDate;
+  private String updatedBy;
+  private Long version;
+
+
+  public void setVersion(Long version) {
+    this.version = version;
+  }
+
+  public BaseResponse() {
+    // nothing here
+  }
+
+  public BaseResponse(String id, String userId, Date createdDate, String createdBy,
+      Date updatedDate, String updatedBy) {
+    this.id = id;
+    this.userId = userId;
+    this.createdDate = createdDate;
+    this.createdBy = createdBy;
+    this.updatedBy = updatedBy;
+  }
+
+  public BaseResponse(String id, String userId, Date createdDate, String createdBy,
+      Date updatedDate, String updatedBy, Long version) {
+    this.id = id;
+    this.userId = userId;
+    this.createdDate = createdDate;
+    this.createdBy = createdBy;
+    this.updatedDate = updatedDate;
+    this.updatedBy = updatedBy;
+    this.version = version;
+  }
+
+  public String getCreatedBy() {
+    return createdBy;
+  }
+
+  public Date getCreatedDate() {
+    return createdDate;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public String getUpdatedBy() {
+    return updatedBy;
+  }
+
+  public Date getUpdatedDate() {
+    return updatedDate;
+  }
+
+  public void setCreatedBy(String createdBy) {
+    this.createdBy = createdBy;
+  }
+
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
+  }
+
+  public Long getVersion() {
+    return version;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
+
+  public void setUpdatedBy(String updatedBy) {
+    this.updatedBy = updatedBy;
+  }
+
+  public void setUpdatedDate(Date updatedDate) {
+    this.updatedDate = updatedDate;
+  }
+
+  @Override
+  public String toString() {
+    return String
+        .format(
+            "BaseResponse [id=%s, userId=%s, createdDate=%s, createdBy=%s, updatedDate=%s, updatedBy=%s, version=%s]",
+            id, userId, createdDate, createdBy, updatedDate, updatedBy, version);
+  }
+
+}

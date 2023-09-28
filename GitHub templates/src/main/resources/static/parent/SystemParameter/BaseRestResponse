@@ -1,0 +1,135 @@
+package com.multispring.{projectName}.response;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class BaseRestResponse extends BaseRest implements Serializable {
+
+  public static class Builder implements BaseBuilder<BaseRestResponse> {
+
+    private String errorMessage;
+    private String errorCode;
+    private boolean success;
+    private String requestId;
+
+    @Override
+    public BaseRestResponse build() {
+      return new BaseRestResponse(this);
+    }
+
+    public String getRequestId() {
+      return this.requestId;
+    }
+
+    /**
+     * @param errorCode the errorCode to set
+     */
+    public Builder setErrorCode(String errorCode) {
+      this.errorCode = errorCode;
+      return this;
+    }
+
+    /**
+     * @param errorMessage the errorMessage to set
+     */
+    public Builder setErrorMessage(String errorMessage) {
+      this.errorMessage = errorMessage;
+      return this;
+    }
+
+    public Builder setRequestId(String requestId) {
+      this.requestId = requestId;
+      return this;
+    }
+
+    /**
+     * @param success the success to set
+     */
+    public Builder setSuccess(boolean success) {
+      this.success = success;
+      return this;
+    }
+
+    @Override
+    public String toString() {
+      return String.format(
+          "Builder [errorMessage=%s, errorCode=%s, success=%s, requestId=%s, toString()=%s]",
+          this.errorMessage, this.errorCode, this.success, this.requestId, super.toString());
+    }
+
+  }
+
+  private static final long serialVersionUID = -2202435111425148959L;
+
+  private String errorMessage;
+  private String errorCode;
+  private boolean success;
+
+  public BaseRestResponse() {
+    // do nothing
+  }
+
+  public BaseRestResponse(boolean success) {
+    this.errorMessage = null;
+    this.errorCode = null;
+    this.success = success;
+  }
+
+  private BaseRestResponse(Builder builder) {
+    this.errorCode = builder.errorCode;
+    this.errorMessage = builder.errorMessage;
+    this.success = builder.success;
+  }
+
+  /**
+   * for success response
+   *
+   * @param requestId
+   */
+  public BaseRestResponse(String requestId) {
+    super(requestId);
+    this.errorMessage = null;
+    this.errorCode = null;
+    this.success = true;
+  }
+
+  public BaseRestResponse(String errorMessage, String errorCode, boolean success,
+      String requestId) {
+    super(requestId);
+    this.errorMessage = errorMessage;
+    this.errorCode = errorCode;
+    this.success = success;
+  }
+
+  public String getErrorCode() {
+    return this.errorCode;
+  }
+
+  public String getErrorMessage() {
+    return this.errorMessage;
+  }
+
+  public boolean isSuccess() {
+    return this.success;
+  }
+
+  public void setErrorCode(String errorCode) {
+    this.errorCode = errorCode;
+  }
+
+  public void setErrorMessage(String errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  public void setSuccess(boolean success) {
+    this.success = success;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "BaseResponseWrapper [errorMessage=%s, errorCode=%s, success=%s, toString()=%s]",
+        this.errorMessage, this.errorCode, this.success, super.toString());
+  }
+
+}

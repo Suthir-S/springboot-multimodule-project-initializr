@@ -1,0 +1,26 @@
+package {groupId}.helper;
+
+import java.util.Date;
+import java.time.ZoneId;
+import java.time.LocalDateTime;
+import {groupId}.response.SystemParameterResponse;
+import {groupId}.entity.SystemParameter;
+
+public final class CopyProperties{
+    public static void copyResponse(SystemParameterResponse systemParameterResponse,SystemParameter systemParameter){
+            systemParameterResponse.setVariable(systemParameter.getVariable());
+            systemParameterResponse.setValue(systemParameter.getValue());
+            systemParameterResponse.setDescription(systemParameter.getDescription());
+            systemParameterResponse.setCreatedBy(systemParameter.getCreatedBy());
+            systemParameterResponse.setUpdatedBy(systemParameter.getUpdatedBy());
+            systemParameterResponse.setId(systemParameter.getId());
+            systemParameterResponse.setVersion(systemParameter.getVersion());
+            systemParameterResponse.setCreatedDate(convertLocalDateTimeToDateUsingInstant(systemParameter.getCreatedDate()));
+            systemParameterResponse.setUpdatedDate(convertLocalDateTimeToDateUsingInstant(systemParameter.getUpdatedDate()));
+        }
+
+    private static Date convertLocalDateTimeToDateUsingInstant(LocalDateTime localDateTime) {
+            return Date.from(localDateTime.atZone(ZoneId.systemDefault())
+                    .toInstant());
+    }
+}

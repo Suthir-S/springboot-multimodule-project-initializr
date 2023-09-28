@@ -1,0 +1,69 @@
+package com.multispring.{projectName}.response;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RestListResponse<T extends BaseResponse> extends BaseRestResponse {
+
+  private static final long serialVersionUID = 8822817643830227107L;
+
+  private List<T> content = new ArrayList<T>();
+
+  @SuppressWarnings("deprecation")
+  private PageMetaData pageMetaData = new PageMetaData();
+
+  @Deprecated
+  public RestListResponse() {
+    super();
+  }
+
+  /**
+   * for success response
+   *
+   * @param content
+   * @param pageMetaData
+   * @param requestId
+   */
+  public RestListResponse(List<T> content, PageMetaData pageMetaData,
+      String requestId) {
+    super(null, null, true, requestId);
+    this.content = content;
+    this.pageMetaData = pageMetaData;
+  }
+
+  public RestListResponse(String errorMessage, String errorCode, boolean success,
+      List<T> content, PageMetaData pageMetaData, String requestId) {
+    super(errorMessage, errorCode, success, requestId);
+    this.content = content;
+    this.pageMetaData = pageMetaData;
+  }
+
+  public RestListResponse(String errorMessage, String errorCode, boolean success,
+      String requestId) {
+    super(errorMessage, errorCode, success, requestId);
+  }
+
+  public List<T> getContent() {
+    return this.content;
+  }
+
+  public PageMetaData getPageMetaData() {
+    return this.pageMetaData;
+  }
+
+  public void setContent(List<T> content) {
+    this.content = content;
+  }
+
+  public void setPageMetaData(PageMetaData pageMetaData) {
+    this.pageMetaData = pageMetaData;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "WebSummaryResponseWrapper [content=%s, pageMetaData=%s, toString()=%s]", this.content,
+        this.pageMetaData, super.toString());
+  }
+
+}

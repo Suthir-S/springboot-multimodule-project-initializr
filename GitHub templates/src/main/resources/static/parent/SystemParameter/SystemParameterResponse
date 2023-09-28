@@ -1,0 +1,21 @@
+package com.multispring.{projectName}.response;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.multispring.{projectName}.response.BaseResponse;
+import lombok.Data;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Data
+@Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class SystemParameterResponse extends BaseResponse {
+
+  private String variable;
+  private String value;
+  private String description;
+}
+

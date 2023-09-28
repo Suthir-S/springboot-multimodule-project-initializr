@@ -1,0 +1,14 @@
+package com.multispring.{projectName}.constant;
+
+public final class ApiPath {
+    public static final String PREFIX ="/api";
+    public static final String SYSTEM_PARAMETER =PREFIX+"/system_parameter";
+    public static final String SYSTEM_PARAMETER_INSERT ="/insert";
+    public static final String SYSTEM_PARAMETER_DELETE ="/delete";
+    public static final String SYSTEM_PARAMETER_FIND_ALL ="/findAll";
+    public static final String SYSTEM_PARAMETER_UPDATE ="/update";
+
+    private ApiPath(){
+        // No implementation needed
+    }
+}

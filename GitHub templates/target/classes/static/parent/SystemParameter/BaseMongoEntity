@@ -1,0 +1,51 @@
+package com.multispring.{projectName}.entity;
+
+import lombok.Data;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Data
+public abstract class BaseMongoEntity implements Serializable {
+
+    public static final String UPDATED_DATE = "updatedDate";
+
+    public static final String CREATED_DATE = "createdDate";
+
+    private static final long serialVersionUID = 1L;
+
+    public static final String CREATED_BY = "createdBy";
+
+    public static final String UPDATED_BY = "updatedBy";
+
+    @Id
+    private String id;
+    @Version
+    private Long version;
+    @CreatedDate
+    @Field(value = BaseMongoEntity.CREATED_DATE)
+    private LocalDateTime createdDate;
+
+    @CreatedBy
+    @Field(value = BaseMongoEntity.CREATED_BY)
+    private String createdBy;
+
+    @LastModifiedDate
+    @Field(value = BaseMongoEntity.UPDATED_DATE)
+    private LocalDateTime updatedDate;
+
+    @LastModifiedBy
+    @Field(value = BaseMongoEntity.UPDATED_BY)
+    private String updatedBy;
+
+
+}

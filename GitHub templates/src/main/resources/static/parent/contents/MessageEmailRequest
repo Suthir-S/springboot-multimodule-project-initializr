@@ -1,0 +1,32 @@
+package com.multispring.{projectName}.request.kafka;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.util.Map;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class MessageEmailRequest {
+    private String messageSubject;
+    private String messageCc;
+    private String messageBcc;
+    private String messageReplyTo;
+    private String messageFrom;
+    private String messageId;
+    private String messageTo;
+    private String messageIdentifierKey;
+    private String messageIdentifierValue;
+    private String attachments;
+    private String storeId;
+    private String channelId;
+    private String clientId;
+    private String requestId;
+    private String username;
+    private Map<Object, Object> variables;
+}

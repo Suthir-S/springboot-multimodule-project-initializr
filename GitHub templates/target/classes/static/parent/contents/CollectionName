@@ -1,0 +1,5 @@
+package com.multispring.{projectName}.constant;
+
+public final class CollectionName {
+    public static final String SYSTEM_PARAMETER = "system_parameter";
+}

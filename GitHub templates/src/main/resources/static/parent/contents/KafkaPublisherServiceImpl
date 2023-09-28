@@ -1,0 +1,45 @@
+package com.multispring.{projectName}.kafka;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.multispring.{projectName}.request.kafka.MessageEmailRequest;
+import com.multispring.{projectName}.kafka.KafkaPublisherService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
+
+@Service
+@Slf4j
+public class KafkaPublisherServiceImpl implements KafkaPublisherService {
+
+    private KafkaTemplate kafkaTemplate;
+    private ObjectMapper objectMapper;
+
+    @Value("${kafka.topic}")
+    private String SEND_EMAIL_TOPIC;
+
+    @Autowired
+    public KafkaPublisherServiceImpl(KafkaTemplate kafkaTemplate, ObjectMapper objectMapper) {
+        this.kafkaTemplate = kafkaTemplate;
+        this.objectMapper = objectMapper;
+    }
+
+    @Override
+    public void publishEmailToXMessage(MessageEmailRequest messageEmailRequest) {
+        try {
+            if(messageEmailRequest!=null){
+                kafkaTemplate.send(SEND_EMAIL_TOPIC,
+                        this.objectMapper.writeValueAsString(messageEmailRequest));
+            }
+        } catch (Exception e) {
+            log.error(
+                "#KafkaPublisherServiceImpl Error in publishing messageEmailRequest with "
+                    + "xMessage: {} to kafka with topic: "
+                    + "{} and exception {}",
+                    messageEmailRequest,
+                    SEND_EMAIL_TOPIC,
+                    e);
+        }
+    }
+}

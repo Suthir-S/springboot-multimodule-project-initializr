@@ -1,0 +1,7 @@
+package com.multispring.{projectName}.kafka;
+
+import com.multispring.{projectName}.request.kafka.MessageEmailRequest;
+
+public interface KafkaPublisherService {
+    void publishEmailToXMessage(MessageEmailRequest messageEmailRequest);
+}

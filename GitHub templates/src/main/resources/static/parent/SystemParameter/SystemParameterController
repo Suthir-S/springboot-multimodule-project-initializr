@@ -1,0 +1,99 @@
+/* https://stash.gdn-app.com/projects/HIC/repos/cart-flashsale/browse/rest-web/src/main/java/com/gdn/x/cart/rest/web/controller/api/SystemParameterController.java  */
+
+package {groupId}.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+
+import {groupId}.response.PageMetaData;
+import {groupId}.response.BaseRestResponse;
+import {groupId}.response.RestListResponse;
+import {groupId}.request.SystemParameterRequest;
+import {groupId}.response.SystemParameterResponse;
+import {groupId}.SystemParameterService;
+import {groupId}.constant.ApiPath;
+import {groupId}.exception.BaseBusinessException;
+
+@RestController
+@RequestMapping(ApiPath.SYSTEM_PARAMETER)
+public class SystemParameterController {
+
+  private static final Logger LOG = LoggerFactory.getLogger(SystemParameterController.class);
+
+  @Autowired
+  private SystemParameterService systemParameterService;
+
+    @DeleteMapping(ApiPath.SYSTEM_PARAMETER_DELETE)
+    public BaseRestResponse deleteSystemParamter(@RequestParam String variable) throws Exception {
+    try {
+          SystemParameterController.LOG.info("variable:{}", variable);
+          this.systemParameterService.delete(variable);
+          return new BaseRestResponse(true);
+        }catch (BaseBusinessException ex){
+          SystemParameterController.LOG.info("exception:{}", ex.getErrorCode().getMessage());
+          return new BaseRestResponse(ex.getErrorCode().getMessage(),ex.getErrorCode().toString(),false,null);
+        }
+    }
+
+    @GetMapping(ApiPath.SYSTEM_PARAMETER_FIND_ALL)
+    public RestListResponse<SystemParameterResponse> findAll(@RequestParam String value)
+            throws ReflectiveOperationException {
+      SystemParameterController.LOG.info("value:{}", value);
+      List<SystemParameterResponse> systemParameterResponses = this.systemParameterService.findAll(value);
+      int size = systemParameterResponses.size();
+      return new RestListResponse<SystemParameterResponse>(systemParameterResponses,
+          new PageMetaData(size, 0, size), value);
+    }
+
+/*
+  @RequestMapping(value = {ApiPath.SYSTEM_PARAMETER_FIND_ONE}, method = {RequestMethod.GET},
+      produces = {MediaType.APPLICATION_JSON_VALUE})
+  @ResponseBody
+  public RestSingleResponse<SystemParameterResponse> findOne(@RequestParam String storeId,
+      @RequestParam String requestId, @RequestParam String channelId,
+      @RequestParam String clientId, @RequestParam String variable,
+      @RequestParam Map<String, String> requestParams) throws ReflectiveOperationException {
+    SystemParameterController.LOG.info("requestParams:{}", requestParams);
+    SystemParameter systemParameter =
+        this.systemParameterService.findValueByStoreIdAndVariable(storeId, variable);
+    SystemParameterResponse systemParameterResponse = new SystemParameterResponse();
+    PropertyUtils.copyProperties(systemParameterResponse, systemParameter);
+
+    return new RestSingleResponse<SystemParameterResponse>(systemParameterResponse, requestId);
+  }*/
+
+  @PostMapping(ApiPath.SYSTEM_PARAMETER_INSERT)
+  public BaseRestResponse insertSystemParamter(@RequestBody SystemParameterRequest systemParameterRequest) throws Exception {
+    try {
+          this.systemParameterService.insert(systemParameterRequest);
+          return new BaseRestResponse(true);
+    }catch (BaseBusinessException ex){
+          SystemParameterController.LOG.info("exception:{}", ex.getErrorCode().getMessage());
+          return new BaseRestResponse(ex.getErrorCode().getMessage(),ex.getErrorCode().toString(),false,null);
+    }
+  }
+
+  @PutMapping(ApiPath.SYSTEM_PARAMETER_UPDATE)
+  public BaseRestResponse updateSystemParamter(@RequestBody SystemParameterRequest systemParameterRequest)
+              throws Exception {
+    SystemParameterController.LOG.info("request:{}", systemParameterRequest);
+    try {
+        this.systemParameterService.update(systemParameterRequest);
+        return new BaseRestResponse(true);
+    }catch (BaseBusinessException ex){
+        SystemParameterController.LOG.info("exception:{}", ex.getErrorCode().getMessage());
+        return new BaseRestResponse(ex.getErrorCode().getMessage(),ex.getErrorCode().toString(),false,null);
+    }
+  }
+}

@@ -1,0 +1,55 @@
+package com.multispring.{projectName}.response;
+
+import java.io.Serializable;
+
+public class PageMetaData implements Serializable {
+
+  private static final long serialVersionUID = 4404002610096626545L;
+
+  private long pageSize = 0;
+  private long pageNumber = 0;
+  private long totalRecords = 0;
+
+  @Deprecated
+  public PageMetaData() {}
+
+  public PageMetaData(long pageSize, long pageNumber, long totalRecords) {
+    this.pageSize = pageSize;
+    this.pageNumber = pageNumber;
+    this.totalRecords = totalRecords;
+  }
+
+  public long getPageNumber() {
+    return pageNumber;
+  }
+
+  public long getPageSize() {
+    return pageSize;
+  }
+
+  public long getTotalRecords() {
+    return totalRecords;
+  }
+
+  public void setPageNumber(long pageNumber) {
+    this.pageNumber = pageNumber;
+  }
+
+  public void setPageSize(long pageSize) {
+    this.pageSize = pageSize;
+  }
+
+  public void setTotalRecords(long totalRecords) {
+    this.totalRecords = totalRecords;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("PageMetaDataWrapper [pageSize=").append(pageSize).append(", pageNumber=")
+        .append(pageNumber).append(", totalRecords=").append(totalRecords).append("]");
+    return builder.toString();
+  }
+
+
+}

@@ -1,0 +1,15 @@
+package {groupId};
+
+import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import {groupId}.exception.BaseBusinessException;
+import {groupId}.request.SystemParameterRequest;
+import {groupId}.response.SystemParameterResponse;
+
+public interface SystemParameterService {
+  void delete(String variable) throws BaseBusinessException;
+  // Optional<SystemParameter> findByVariable(String variable);
+  void insert(SystemParameterRequest systemParameterRequest) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, BaseBusinessException;
+  void update(SystemParameterRequest systemParameter) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, BaseBusinessException;
+  List<SystemParameterResponse> findAll(String value) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException;
+}

@@ -1,0 +1,32 @@
+package com.multispring.{projectName}.response;
+
+import java.io.Serializable;
+
+public abstract class BaseRest implements Serializable {
+
+  private static final long serialVersionUID = -7936563322543294051L;
+
+  private String requestId;
+
+  public BaseRest() {
+    // do nothing here
+  }
+
+  public BaseRest(String requestId) {
+    this.requestId = requestId;
+  }
+
+  public String getRequestId() {
+    return requestId;
+  }
+
+  public void setRequestId(String requestId) {
+    this.requestId = requestId;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("BaseWrapper [requestId=%s]", requestId);
+  }
+
+}

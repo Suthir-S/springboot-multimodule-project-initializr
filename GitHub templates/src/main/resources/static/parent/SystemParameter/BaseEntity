@@ -1,0 +1,67 @@
+package com.multispring.{projectName}.entity;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.io.Serializable;
+import java.util.Date;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@MappedSuperclass
+@EntityListeners({AuditingEntityListener.class})
+@ToString
+public class BaseEntity implements Serializable {
+
+    public static final String UPDATED_DATE = "updatedDate";
+
+    public static final String ID = "id";
+
+    public static final String CREATED_DATE = "createdDate";
+
+    public static final String CREATED_BY = "createdBy";
+
+    public static final String UPDATED_BY = "updatedBy";
+
+    public static final String TIMESTAMP_WITH_TIME_ZONE = "TIMESTAMP WITH TIME ZONE";
+
+    @Column(name = BaseEntity.ID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name =  BaseEntity.CREATED_DATE, columnDefinition = BaseEntity.TIMESTAMP_WITH_TIME_ZONE)
+    private Date createdDate;
+
+    @CreatedBy
+    @Column(name =  BaseEntity.CREATED_BY)
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column(name =  BaseEntity.UPDATED_BY)
+    private String updatedBy;
+
+    @LastModifiedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name =  BaseEntity.UPDATED_DATE, columnDefinition = BaseEntity.TIMESTAMP_WITH_TIME_ZONE)
+    private Date updatedDate;
+
+}

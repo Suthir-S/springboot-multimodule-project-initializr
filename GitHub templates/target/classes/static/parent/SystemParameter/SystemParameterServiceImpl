@@ -1,0 +1,79 @@
+package {groupId}.serviceimpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.apache.commons.beanutils.PropertyUtils;
+import java.lang.reflect.InvocationTargetException;
+import {groupId}.exception.BaseBusinessException;
+import {groupId}.repository.SystemParameterRepository;
+import {groupId}.entity.SystemParameter;
+import {groupId}.request.SystemParameterRequest;
+import {groupId}.response.SystemParameterResponse;
+import {groupId}.SystemParameterService;
+import {groupId}.enums.ErrorCode;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+import java.util.Optional;
+
+@Service
+public class SystemParameterServiceImpl implements SystemParameterService {
+
+    private final String UPDATED_BY = "System";
+
+    @Autowired
+    SystemParameterRepository systemParameterRepository;
+
+    @Override
+    public void insert(SystemParameterRequest systemParameterRequest) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, BaseBusinessException{
+        Optional<SystemParameter> findSystemParameter = systemParameterRepository.findByVariable(systemParameterRequest.getVariable());
+        if(findSystemParameter.isPresent()){
+            throw new BaseBusinessException(ErrorCode.VARIABLE_ALREADY_EXISTS);
+        }else {
+            SystemParameter systemParameter = new SystemParameter();
+            systemParameter.setUpdatedBy(UPDATED_BY);
+            systemParameter.setCreatedBy(UPDATED_BY);
+            systemParameter.setCreatedDate(new Date());
+            systemParameter.setUpdatedDate(new Date());
+            PropertyUtils.copyProperties(systemParameter, systemParameterRequest);
+            systemParameterRepository.save(systemParameter);
+        }
+    }
+
+    @Override
+    public void delete( String variable) throws BaseBusinessException {
+        Optional<SystemParameter> findSystemParameter = systemParameterRepository.findByVariable(variable);
+        if(findSystemParameter.isPresent()) {
+            this.systemParameterRepository.delete(findSystemParameter.get());
+        }else {
+            throw new BaseBusinessException(ErrorCode.VARIABLE_DOES_NOT_EXISTS);
+        }
+    }
+
+    @Override
+    public List<SystemParameterResponse> findAll(String value) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+        List<SystemParameter> systemParameterList = systemParameterRepository.findAllByValue(value);
+        List<SystemParameterResponse> systemParameterResponseList = new ArrayList<>();
+        for (SystemParameter systemParameter:systemParameterList) {
+            SystemParameterResponse systemParameterResponse = new SystemParameterResponse();
+            PropertyUtils.copyProperties(systemParameterResponse,systemParameter);
+            systemParameterResponseList.add(systemParameterResponse);
+        }
+        return systemParameterResponseList;
+    }
+
+    @Override
+    public void update(SystemParameterRequest systemParameterRequest) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,BaseBusinessException{
+        Optional<SystemParameter> findSystemParameter = systemParameterRepository.findByVariable(systemParameterRequest.getVariable());
+        if(findSystemParameter.isPresent()){
+              SystemParameter systemParameter = findSystemParameter.get();
+              systemParameter.setUpdatedDate(new Date());
+              systemParameter.setUpdatedBy(UPDATED_BY);
+              PropertyUtils.copyProperties(systemParameter,systemParameterRequest);
+              systemParameterRepository.save(systemParameter);
+        }else{
+              throw new BaseBusinessException(ErrorCode.VARIABLE_DOES_NOT_EXISTS);
+        }
+    }
+
+}
