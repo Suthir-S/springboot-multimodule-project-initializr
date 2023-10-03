@@ -1,5 +1,3 @@
-/* https://stash.gdn-app.com/projects/HIC/repos/cart-flashsale/browse/rest-web/src/main/java/com/gdn/x/cart/rest/web/controller/api/SystemParameterController.java  */
-
 package {groupId}.controller;
 
 import java.util.List;
